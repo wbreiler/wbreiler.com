@@ -7,12 +7,15 @@
     "start": "astro dev",
     "check": "astro check",
     "build": "astro check && astro build",
-    "preview": "astro preview",
+    "preview": "npm run build && wrangler dev",
     "astro": "astro",
-    "format": "prettier './src/**/*' --write"
+    "format": "prettier './src/**/*' --write",
+    "generate-types": "wrangler types",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.7",
+    "@astrojs/cloudflare": "^13.1.5",
     "@astrojs/rss": "^4.0.17",
     "@picocss/pico": "^2.1.1",
     "astro": "^6.0.2",
@@ -22,7 +25,8 @@
   "devDependencies": {
     "prettier": "~3.8.1",
     "prettier-plugin-astro": "^0.14.1",
-    "sass": "^1.97.3"
+    "sass": "^1.97.3",
+    "wrangler": "^4.78.0"
   },
   "devEngines": {
     "runtime": {
@@ -30,5 +34,8 @@
       "version": "^22.20.0 ^24.12.0",
       "onFail": "warn"
     }
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
