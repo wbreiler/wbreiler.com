@@ -1,0 +1,42 @@
+---
+import type { CollectionEntry } from "astro:content";
+import TagList from "@components/TagList.astro";
+import FormattedDate from "@components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, pubDate, tags } = Astro.props;
+---
+
+<article>
+  <header>
+    <h1>{title}</h1>
+    <FormattedDate date={pubDate} />
+  </header>
+  <slot />
+
+  {
+    tags && (
+      <footer>
+        <h4>Tags</h4>
+        <TagList tags={tags} />
+      </footer>
+    )
+  }
+
+  <script is:inline src="https://giscus.app/client.js"
+    data-repo="wbreiler/wbreiler.com"
+    data-repo-id="REPLACE_WITH_REPO_ID"
+    data-category="Comments"
+    data-category-id="REPLACE_WITH_CATEGORY_ID"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+  </script>
+</article>

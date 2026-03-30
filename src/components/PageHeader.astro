@@ -1,0 +1,20 @@
+---
+import NavLink from "./NavLink.astro";
+---
+
+<header>
+  <nav aria-label="Main">
+    <ul>
+      <li>
+        <a href="/">
+          <strong>Will Breiler</strong>
+        </a>
+      </li>
+    </ul>
+    <ul>
+      <li><NavLink path="projects">Projects</NavLink></li>
+      <li><NavLink path="blog">Blog</NavLink></li>
+      <li><NavLink path="about">About</NavLink></li>
+    </ul>
+  </nav>
+</header>
