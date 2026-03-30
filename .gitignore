@@ -27,3 +27,9 @@ pnpm-debug.log*
 !.vscode/extensions.json
 
 .claude
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
