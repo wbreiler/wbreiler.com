@@ -2,9 +2,16 @@
 title: "Running Plex in a Proxmox LXC with Stable GPU Passthrough"
 description: "Moving Plex from Docker to an LXC is straightforward — until you need hardware transcoding across multiple cluster nodes. Here's the by-path fix that made it work reliably."
 pubDate: 2026-03-30
+tags:
+  - proxmox
+  - lxc
+  - plex
+  - gpu
+  - homelab
+  - linux
 ---
 
-Moving Plex from TrueNAS SCALE to a Proxmox LXC is mostly painless. SCALE runs Plex as a Docker container through its app catalog, so the config and metadata are all there — you just need to extract them and drop them somewhere the LXC can reach. Point it at the same media path, restore your config, done. The part that took real time was getting hardware transcoding working *stably* — specifically, keeping it working after live-migrating the LXC between cluster nodes.
+Moving Plex from TrueNAS SCALE to a Proxmox LXC is mostly painless. SCALE runs Plex as a Docker container through its app catalog, so the config and metadata are all there — you just need to extract them and drop them somewhere the LXC can reach. Point it at the same media path, restore your config, done. The part that took real time was getting hardware transcoding working _stably_ — specifically, keeping it working after live-migrating the LXC between cluster nodes.
 
 ## The Basic Setup
 
@@ -12,7 +19,7 @@ Stand up a Debian LXC, install Plex via the official `.deb`, bind-mount your med
 
 For GPU access, Plex needs the DRI device nodes — typically `/dev/dri/card0` and `/dev/dri/renderD128`. The standard LXC config for this:
 
-```
+```config
 lxc.cgroup2.devices.allow: c 226:0 rwm
 lxc.cgroup2.devices.allow: c 226:128 rwm
 lxc.mount.entry: /dev/dri/card0 dev/dri/card0 none bind,optional,create=file
@@ -39,14 +46,14 @@ ls -la /dev/dri/by-path/
 
 Output looks like:
 
-```
+```bash
 pci-0000:00:02.0-card -> ../card0
 pci-0000:00:02.0-render -> ../renderD128
 ```
 
 On identical hardware — same motherboard, same slot — the PCIe address is the same across nodes. Update the LXC mount entries to use the by-path symlink as the source:
 
-```
+```config
 lxc.mount.entry: /dev/dri/by-path/pci-0000:00:02.0-card dev/dri/card0 none bind,optional,create=file
 lxc.mount.entry: /dev/dri/by-path/pci-0000:00:02.0-render dev/dri/renderD128 none bind,optional,create=file
 ```

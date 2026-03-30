@@ -2,6 +2,10 @@
 title: "How I Name Things in My Homelab (and Why It Matters)"
 description: "A consistent naming scheme is boring infrastructure work that pays off every time you SSH somewhere, read a log, or add a new node."
 pubDate: 2026-03-30
+tags:
+  - homelab
+  - infrastructure
+  - networking
 ---
 
 Naming infrastructure is one of those decisions that feels trivial until you have fifteen things running and can't remember which one is which. I spent some time early on thinking through a scheme I could live with, and I've been happy with it ever since. Here's what I landed on and why.
@@ -16,7 +20,7 @@ Every host in my homelab follows the same pattern: `function-location-number`. I
 - `pxe-nash` — network boot server
 - `grafana-nash` — monitoring
 
-The function segment says what the machine *does*. The location says where it *is*. The number disambiguates when there are multiples of the same thing.
+The function segment says what the machine _does_. The location says where it _is_. The number disambiguates when there are multiples of the same thing.
 
 ## Why Location
 

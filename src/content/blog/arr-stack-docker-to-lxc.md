@@ -2,6 +2,12 @@
 title: "Migrating the *arr Stack from Docker to Proxmox LXCs"
 description: "Why I moved Sonarr, Radarr, and Prowlarr out of Docker and into LXC containers on Proxmox, and what the migration actually looked like."
 pubDate: 2026-03-30
+tags:
+  - proxmox
+  - lxc
+  - docker
+  - homelab
+  - linux
 ---
 
 I ran Sonarr, Radarr, and Prowlarr on TrueNAS SCALE for a few years. SCALE runs its app catalog on Docker under the hood, which worked fine — until I moved to a Proxmox cluster and started questioning why I was running Docker on a separate NAS box when Proxmox has its own container runtime. Turns out LXCs aren't just Docker with extra steps. They're a genuinely different tradeoff, and for a media stack on Proxmox, they come out ahead.
@@ -29,7 +35,7 @@ Unprivileged LXCs are the default and the right choice. The catch: unprivileged 
 
 My fix was to create a common group on the Proxmox host (e.g., `media`, GID 10000) and add that GID to the media directories. Then in each LXC config, I mapped that GID consistently so all containers — Sonarr, Radarr, Prowlarr — could read and write the same paths without fighting over permissions:
 
-```
+```ini
 # In /etc/pve/lxc/<id>.conf
 lxc.idmap: u 0 100000 65536
 lxc.idmap: g 0 100000 65536
