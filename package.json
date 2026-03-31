@@ -10,12 +10,8 @@
     "preview": "npm run build && wrangler dev",
     "astro": "astro",
     "format": "prettier './src/**/*' --write",
-<<<<<<< HEAD
     "generate-types": "wrangler types",
     "deploy": "npm run build && wrangler deploy"
-=======
-    "generate-types": "wrangler types"
->>>>>>> 45ce916 (Configure site for Cloudflare Pages deployment)
   },
   "dependencies": {
     "@astrojs/check": "^0.9.7",
